@@ -5,7 +5,8 @@ const app = express()
 const purple = express()
 const haze = express()
 
-app.get('/api/launch', (req, res, next) => res.send('boom'));
+app.get('/', (req, res, next) => res.sendFile('index.html', {root: __dirname+'/'}));
+
 
 purple.get('/*', prpl.makeHandler('prpl/build/', {
   builds: [
