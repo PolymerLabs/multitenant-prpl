@@ -1,0 +1,16 @@
+{
+  "name": "multitenant-prpl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "(cd prpl; bower install); (cd haze; bower install)",
+    "build": "(cd prpl; polymer build); (cd haze; polymer build)",
+    "serve": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "prpl-server": "^0.7.0"
+  }
+}
