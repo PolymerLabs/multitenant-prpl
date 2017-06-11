@@ -68,10 +68,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <app-location route="{{route}}" url-space-regex="[[rootPattern]]*"></app-location>
+    <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
     <app-route
         route="{{route}}"
-        pattern="[[rootPattern]]:page"
+        pattern="[[rootPath]]:page"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
@@ -80,9 +80,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer id="drawer" slot="drawer">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPattern]]view1">View One</a>
-          <a name="view2" href="[[rootPattern]]view2">View Two</a>
-          <a name="view3" href="[[rootPattern]]view3">View Three</a>
+          <a name="view1" href="[[rootPath]]view1">View One</a>
+          <a name="view2" href="[[rootPath]]view2">View Two</a>
+          <a name="view3" href="[[rootPath]]view3">View Three</a>
         </iron-selector>
       </app-drawer>
 
@@ -121,16 +121,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             reflectToAttribute: true,
             observer: '_pageChanged',
           },
-          rootPattern: {
-            type: String,
-            value: '/haze/'
-            // computed: 'computeRootPattern(rootPath)'
-          },
           routeData: Object,
           subroute: String,
-          // This shouldn't be neccessary, but the Analyzer isn't picking up
-          // Polymer.Element#rootPath
-          rootPath: String,
         };
       }
 
@@ -138,18 +130,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return [
           '_routePageChanged(routeData.page)',
         ];
-      }
-
-      computeRootPattern(rootPath) {
-        // Get root pattern for app-route, for more info about `rootPath` see:
-        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
-
-        // If URL API isn't supported (IE11), use a regex for the URL pathname.
-        if (!(URL.prototype && 'pathname' in URL.prototype)) {
-          return rootPath.replace(/^.+?\/\/?.*?\/|$/, '/');
-        }
-
-        return (new URL(rootPath)).pathname;
       }
 
       _routePageChanged(page) {

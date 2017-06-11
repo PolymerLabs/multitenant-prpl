@@ -25,6 +25,10 @@ To use:
 
 Changes required to basic PSK setup:
 
+-   Hardcode `rootPath` to the app's logical mount point in each app's `index.html`.
+
+        window.Polymer = { rootPath: '/prpl' }
+
 -   Hardcode `basePath` for each build in each app's `polymer.json`.
 
         "builds": [
@@ -32,24 +36,7 @@ Changes required to basic PSK setup:
           { "name": "fallback", "preset": "es5-bundled", "basePath": "/prpl/fallback/" }
         ]
 
--   Hardcode `rootPattern` to the app's logical mount point in `my-app.html`.
-
-        rootPattern: {
-          type: String,
-          value: '/prpl/'
-        },
-
--   Add a `url-space-regex` to `app-location` so it doesn't intercept clicks outside
-    of its root URL. 
-  
-        <app-location route="{{route}}" url-space-regex="[[rootPattern]]*"></app-location>
-
--   Change `rootPath` to `rootPattern` in the navigation anchors.
-
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPattern]]view1">View One</a>
-          <a name="view2" href="[[rootPattern]]view2">View Two</a>
-          <a name="view3" href="[[rootPattern]]view3">View Three</a>
-        </iron-selector>
-
-
+    Note: if you're running prpl-server from the build directory, simply set 
+    `basePath: true`. You only need an explicit `basePath` if you're using prpl-server
+    as a library and the server is _not_ running in the build directory (like here, where 
+    the server runs one level up.)
